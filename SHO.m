@@ -7,11 +7,9 @@ classdef SHO < handle
         y0 double; % initial position
         v0 double; % initial velocity
 
-        F function_handle;
     end
     properties (Access=public)
         yh function_handle;
-        yp function_handle;
         yt function_handle;
     end
 
@@ -23,7 +21,7 @@ classdef SHO < handle
     end
 
     methods (Access=public)
-        function obj = SHO(m,b,k,y0,v0,F)
+        function obj = SHO(m,b,k,y0,v0)
             arguments
                 m double; % mass
                 b double; % damping constant
@@ -31,7 +29,6 @@ classdef SHO < handle
         
                 y0 double = 0; % initial position
                 v0 double = 0; % initial velocity
-                F function_handle = @(t) 0;
             end
 
             obj.m = m;
@@ -39,11 +36,9 @@ classdef SHO < handle
             obj.k = k;
             obj.y0 = y0;
             obj.v0 = v0;
-            obj.F = F;
 
-            obj.calcParticular();
             obj.calcHomogenous();
-            obj.yt = @(t) obj.yh(t) + obj.yp(t);
+            obj.yt = @(t) obj.yh(t);
         end
 
         function yt = getMotion(obj)
@@ -66,9 +61,6 @@ classdef SHO < handle
         end
     end
     methods (Access=private)
-        function calcParticular(obj)
-            obj.yp = @(t) 0;
-        end
         function calcHomogenous(obj)
 
 

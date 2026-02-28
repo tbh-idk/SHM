@@ -71,15 +71,21 @@ classdef FHO < handle
             % mv' + bv + ky - F(t) = 0
             % v' = (1/m)*(F(t)-bv-ky)
             
-            obj.T = obj.ti:obj.dt:obj.tf;
-            y = zeros(1,length(obj.T)); v = zeros(1,length(obj.T));
-            y(1) = obj.y0; v(1) = obj.v0;
-            for i = 1:length(y)-1
-                y(i+1) = y(i) + obj.dt*v(i);
-                v(i+1) = v(i) + obj.dt*(1/obj.m)*(obj.F(obj.T(i)) - obj.b*v(i) - obj.k*y(i)); %
-            end
+            % obj.T = obj.ti:obj.dt:obj.tf;
+            % y = zeros(1,length(obj.T)); v = zeros(1,length(obj.T));
+            % y(1) = obj.y0; v(1) = obj.v0;
+            % for i = 1:length(y)-1
+            %     y(i+1) = y(i) + obj.dt*v(i);
+            %     v(i+1) = v(i) + obj.dt*(1/obj.m)*(obj.F(obj.T(i)) - obj.b*v(i) - obj.k*y(i)); %
+            % end
 
-            obj.yt = y;
+            % u(1) -> y;  u(2) -> v
+            dfdt = @(t,u) [u(2); (1/obj.m)*(obj.F(t) - obj.b*u(2) - obj.k*u(1))];
+            [t,u] = ode45(dfdt, [obj.ti obj.tf], [obj.y0 obj.v0]);
+            obj.T = t;
+
+            % obj.yt = y;
+            obj.yt = u(:,1);
         end
     end
 end

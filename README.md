@@ -10,4 +10,5 @@
 - Mass, damping coefficient, spring constant, forcing function can be adjusted
 - Equation of motion is determined using eulers method
 - To make more accurate, reduce dt
-<img width="1112" height="620" alt="image" src="https://github.com/user-attachments/assets/1bb0e769-6de4-431a-a8f2-46796bb2e831" />
+<img width="1112" height="620" alt="image" src="https://github.com/user-attachments/assets/863d3f50-da11-4ce0-8b5f-03910db4aea2" />
+
